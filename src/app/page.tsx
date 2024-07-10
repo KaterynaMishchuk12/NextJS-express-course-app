@@ -1,15 +1,22 @@
 import course from "./course.json";
+import { Lesson } from "./lesson";
 import styles from "./page.module.css";
 
-export default function Home() {
+async function getAllCourses(): Promise<typeof course> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(course), 3000);
+  });
+}
+
+export default async function Home() {
+  const courses = await getAllCourses();
   return (
     <main className={styles.main}>
       <ul>
-        {course.lessons.map((lesson) => {
+        {courses.lessons.map((lesson) => {
           return (
             <li key={lesson.name}>
-              <h2> {lesson.title}</h2>
-              <p>{lesson.points}</p>
+              <Lesson title={lesson.title} points={lesson.name} />
             </li>
           );
         })}
